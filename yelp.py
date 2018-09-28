@@ -8,6 +8,7 @@ import urllib
 from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.parse import urlencode
+from collections import OrderedDict
 
 API_KEY = 'CmsXVp1-bD4NIQIt529exwaF6YhjEsXYnlR7tFn6VpMLseqJeDG0ODyXqoWTDyxHcA523Q8Wyix67_sFbZDk9UwedPPrioZL2aNOAr9sHB9Y_-PAE1cPcQT5wFOuW3Yx'
 
@@ -80,10 +81,11 @@ def business_search(api_key,lat, lon, rad=1609, cat = None):
 
     info = []
     for entry in response_json['businesses']:
-        bus = {"id": entry['id'], 
-               "name": entry['name'], 
-               "coordinates": entry['coordinates']
-              }
+        bus = OrderedDict( [ ( "id", entry['id']),
+                             ( "name", entry['name']),
+                             ( "coordinates", entry['coordinates'])
+                           ]
+                          )
         info.append(bus)
 
     businesses = {"data": info}
