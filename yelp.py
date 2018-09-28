@@ -10,7 +10,7 @@ from urllib.parse import quote
 from urllib.parse import urlencode
 from collections import OrderedDict
 
-API_KEY = 'CmsXVp1-bD4NIQIt529exwaF6YhjEsXYnlR7tFn6VpMLseqJeDG0ODyXqoWTDyxHcA523Q8Wyix67_sFbZDk9UwedPPrioZL2aNOAr9sHB9Y_-PAE1cPcQT5wFOuW3Yx'
+API_KEY = 
 
 API_HOST = 'https://api.yelp.com'
 SEARCH_PATH = '/v3/businesses/search'
