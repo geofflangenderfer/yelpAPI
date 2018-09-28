@@ -9,8 +9,11 @@ from urllib.error import HTTPError
 from urllib.parse import quote
 from urllib.parse import urlencode
 from collections import OrderedDict
+from flask import Flask
 
-API_KEY = 
+app = Flask(__name__)
+
+#API_KEY =
 
 API_HOST = 'https://api.yelp.com'
 SEARCH_PATH = '/v3/businesses/search'
@@ -34,6 +37,7 @@ def request(host, path, api_key, url_params=None):
 
     return response.json()
 
+@app.route('/categories')
 def get_categories(api_key, locale=None):
     """
     return categories of businesses. Defaults
@@ -54,6 +58,7 @@ def get_categories(api_key, locale=None):
 
     return data
 
+@app.route('/bussiness_search')
 def business_search(api_key,lat, lon, rad=1609, cat = None):
     """
     varied search for businesses
@@ -94,6 +99,7 @@ def business_search(api_key,lat, lon, rad=1609, cat = None):
 
 
 
+@app.route('/business_details')
 def business_details(api_key, business_id):
     """
     Return details for a specific business ID
@@ -103,9 +109,9 @@ def business_details(api_key, business_id):
 
     return request(API_HOST, business_path, api_key)
 
-if __name__ == '__main__':
+#if __name__ == '__main__':
 
     #pprint.pprint(get_categories(API_KEY, 'en_US'  ))
-    pprint.pprint(business_search(API_KEY, 42.27, -83.73,cat = 'coffee'))
+    #pprint.pprint(business_search(API_KEY, 42.27, -83.73,cat = 'coffee'))
     #pprint.pprint(business_details(API_KEY, 'c0WpyZFR3EoEBKcoY2LZ3Q'))
 
