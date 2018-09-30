@@ -1,22 +1,22 @@
-#!/home/geoff/miniconda3/bin/python
 import argparse
 import json
 import pprint
 import requests
 import sys
 import urllib
-from urllib.error import HTTPError
+from urllib.error import HTTPError # not used
 from urllib.parse import quote
-from urllib.parse import urlencode
+from urllib.parse import urlencode # not used
 from collections import OrderedDict
 
-#API_KEY =
+#API_KEY_YELP = 
+
+
 
 API_HOST = 'https://api.yelp.com'
 SEARCH_PATH = '/v3/businesses/search'
 BUSINESS_PATH = '/v3/businesses/'
 CATEGORIES_PATH = '/v3/categories'
-
 def request(host, path, api_key, url_params=None):
     """
     returns json from API
@@ -32,7 +32,7 @@ def request(host, path, api_key, url_params=None):
 
     response = requests.request('GET', url, headers=headers, params=url_params)
 
-    return response.json()
+    return response
 
 def get_categories(api_key, locale=None):
     """
@@ -46,7 +46,9 @@ def get_categories(api_key, locale=None):
         }
     else:
         url_params = None
-    response_json =  request(API_HOST, CATEGORIES_PATH , api_key, url_params=url_params)
+    response =  request(API_HOST, CATEGORIES_PATH , api_key, url_params=url_params)
+    response_json = response.json()
+
     cats = []
     for entry in response_json['categories']:
         cats.append(entry['alias'])
@@ -77,7 +79,8 @@ def business_search(api_key,lat, lon, rad=1609, cat = None):
             'limit': 10
         }
 
-    response_json = request(API_HOST, SEARCH_PATH, api_key, url_params=url_params)
+    response = request(API_HOST, SEARCH_PATH, api_key, url_params=url_params)
+    response_json = response.json()
 
     info = []
     for entry in response_json['businesses']:
@@ -92,8 +95,6 @@ def business_search(api_key,lat, lon, rad=1609, cat = None):
 
     return businesses
 
-
-
 def business_details(api_key, business_id):
     """
     Return details for a specific business ID
@@ -101,11 +102,11 @@ def business_details(api_key, business_id):
 
     business_path = BUSINESS_PATH + business_id
 
-    return request(API_HOST, business_path, api_key)
+    response = request(API_HOST, business_path, api_key)
+    return response.json()
 
 if __name__ == '__main__':
 
-    pprint.pprint(get_categories(API_KEY, 'en_US'  ))
-    #pprint.pprint(business_search(API_KEY, 42.27, -83.73,cat = 'coffee'))
-    #pprint.pprint(business_details(API_KEY, 'c0WpyZFR3EoEBKcoY2LZ3Q'))
-
+    #pprint.pprint(get_categories(API_KEY_YELP, 'en_US') )
+    #pprint.pprint(business_search(API_KEY_YELP, 42.27, -83.73, cat = 'coffee') )
+    #pprint.pprint(business_details(API_KEY_YELP, 'c0WpyZFR3EoEBKcoY2LZ3Q') )
