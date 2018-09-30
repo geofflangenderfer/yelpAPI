@@ -2,6 +2,10 @@ import json
 import unittest
 import yelp
 
+# intution behind these tests is to save copies of correct output and
+# use these tests once changes are made to make sure that it still produces
+# correct output
+
 #API_KEY_YELP = 
 
 class TestReturnedDataStructures(unittest.TestCase):
